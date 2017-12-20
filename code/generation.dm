@@ -91,7 +91,7 @@ proc
 		for(var/turf/T in world)
 			for(var/turf/neighbor in vorGetNeighbors(T, vorAllDirs))
 				if(neighbor.loc != T.loc && !T.density)
-					if(drawOutline) T.icon = VOR_BORDER_ICON
+					if(drawOutline) T.icon_state = "dirt"
 					if(!(neighbor.loc in vorAdjacentRegions[T.loc])) vorAdjacentRegions[T.loc] += neighbor.loc
 
 	vorGetNeighbors(turf/T, dirlist)

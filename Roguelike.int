@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
-LAST_COMPILE_TIME: 1513705573
+LAST_COMPILE_TIME: 1513773634
 DIR: code icons 
 AUTO_FILE_DIR: ON
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 511.1369
-WINDOW: code\demo.dm;code\AI.dm
+WINDOW: code\demo.dm;code\player.dm;code\turfs.dm;code\generation.dm;icons\flora.dmi;icons\turfs.dmi;code\AI.dm
 FILE: code\AI.dm
 */
 // END_INTERNALS

@@ -19,5 +19,7 @@
 #include "code\chat.dm"
 #include "code\demo.dm"
 #include "code\generation.dm"
+#include "code\player.dm"
+#include "code\turfs.dm"
 // END_INCLUDE
 

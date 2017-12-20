@@ -25,67 +25,21 @@ proc/testland()
 	vorCreateMountain(10)
 	floraset()
 
+proc/sDel(var/atom/A)
+	for(var/mob/living/dwarf/D in world) if(D.target == src) D.target = null
+	if(A in dig_target) dig_target -= A
+	del(A)
+
 proc/dir4()
 	return pick(NORTH, SOUTH, EAST, WEST)
 
 proc/dir8()
 	return pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
-/turf/grass
-	name = "ground"
-	icon = 'grass.dmi'
-	New()
-		dir = dir8()
-
-/turf/walls
-	icon = 'flora.dmi'
-	density = 1
-	opacity = 1
-
-/turf/walls/rock
-	icon_state = "rock"
-
 /mob/living
 	icon = 'mob.dmi'
 	var/canMove = 1
-
-/mob/player
-	icon = 'mob.dmi'
-	icon_state = "player"
-	density = 0
-	rundelay = 1
-
-var/population
-
-/mob/player/verb/dwarf()
-	for(var/atom/A in loc)
-		if(!loc.density && !A.density) new/mob/living/dwarf(src.loc)
-		else to_chat(usr,"You can't create a dwarf in here.")
-
-/mob/player/verb/make_miner()
-	for(var/mob/living/dwarf/D in src.loc)
-		if(!D.isMiner && !D.isAxeman)
-			D.isMiner = 1
-			civilians -= D
-			miners += D
-			D.overlays += "pickaxe"
-		else to_chat(usr,"[D.name] already has a job!")
-
-/mob/player/verb/make_axeman()
-	for(var/mob/living/dwarf/D in src.loc)
-		if(!D.isMiner && !D.isAxeman)
-			D.isAxeman = 1
-			civilians -= D
-			axemans += D
-			D.overlays += "axe"
-		else to_chat(usr,"[D.name] already has a job!")
-
-/mob/player/verb/possess()
-	for(var/mob/living/dwarf/D in src.loc)
-		if(!D.key)
-			D.key = key
-			del src
-		else to_chat(usr,"You are being unable to possess this dwarf.")
+	var/canAct = 1
 
 /mob/living/dwarf
 	var/isMiner = 0
@@ -96,19 +50,17 @@ var/population
 		population++
 		civilians += src
 
-/mob/living/dwarf/verb/release()
-	new/mob/player(src.loc)
-	for(var/mob/player/P in src.loc) if(!P.key) P.key = key
-
-/turf/water
-	icon = 'water.dmi'
-
 /obj/flora/tree
 	icon = 'flora.dmi'
 	icon_state = "tree"
 	density = 1
 	New()
 		dir = dir4()
+	act_by_item(var/mob/living/dwarf/D,var/tool)
+		if(tool == "axe")
+			msg("[D.name] chops [src] to pieces!")
+			if(D.target) D.target = null
+			sDel(src)
 
 /obj/flora/krasnogrib
 	icon = 'flora.dmi'
